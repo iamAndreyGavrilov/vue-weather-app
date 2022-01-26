@@ -2,7 +2,13 @@
   <div id="app">
     <main>
       <div class="search-box">
-        <input type="text" class="search-bar" placeholder="Search..." />
+        <input
+          v-model="query"
+          @keypress="fetchWeather"
+          type="text"
+          class="search-bar"
+          placeholder="Search..."
+        />
       </div>
       <div class="weather-wrap">
         <div class="location-box">
@@ -19,19 +25,28 @@
 </template>
 
 <script>
-import {options} from "@/api";
 export default {
   name: "App",
   data() {
     return {
-      api_key: "464f8ab19029c8581ffee72e4a010b07",
+      api_key: "0f0f5f2a06f7cbf5eb2c1fd66a268ef2",
+      url_base: "http://api.openweathermap.org/data/2.5/",
+      query: "",
+      weather: {},
     };
   },
   components: {},
   methods: {
-    getWeather() {
-      const data = options
-      return data
+    fetchWeather(e) {
+      if (e.key == "Enter") {
+        fetch(
+          `${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then(this.setResults);
+      }
     },
   },
 };
