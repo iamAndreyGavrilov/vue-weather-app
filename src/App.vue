@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import {options} from "@/api";
 export default {
   name: "App",
   data() {
@@ -27,6 +28,12 @@ export default {
     };
   },
   components: {},
+  methods: {
+    getWeather() {
+      const data = options
+      return data
+    },
+  },
 };
 </script>
 
